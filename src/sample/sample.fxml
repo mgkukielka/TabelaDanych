@@ -62,7 +62,10 @@
                   <TextField fx:id="nazwisko_txt" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <TextField fx:id="pesel_txt" layoutX="427.0" layoutY="70.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                   <TextField fx:id="wzrost_txt" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                  <Label fx:id="pesel_error" textFill="#cd0000" GridPane.columnIndex="3" />
+                  <Label fx:id="pesel_error" alignment="CENTER" contentDisplay="CENTER" textFill="#cd0000" GridPane.columnIndex="3" />
+                  <Label fx:id="imie_error" alignment="CENTER" contentDisplay="CENTER" layoutX="427.0" layoutY="12.0" textFill="#cd0000" GridPane.columnIndex="1" />
+                  <Label fx:id="nazwisko_error" alignment="CENTER" contentDisplay="CENTER" layoutX="143.0" layoutY="12.0" textFill="#cd0000" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label fx:id="wzrost_error" alignment="CENTER" contentDisplay="CENTER" layoutX="143.0" layoutY="111.0" textFill="#cd0000" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                </children>
             </GridPane>
             <Button fx:id="button" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleClick" text="Dodaj" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />

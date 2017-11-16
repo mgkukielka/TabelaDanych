@@ -18,6 +18,10 @@ public class Controller {
     public TextField wzrost_txt;
     public TextField pesel_txt;
     public TableView<Czlowieczek> table;
+    public Label imie_error;
+    public Label nazwisko_error;
+    public Label wzrost_error;
+
 
     public static class Czlowieczek {
 
@@ -31,6 +35,9 @@ public class Controller {
 
         public Czlowieczek() {
 
+        }
+        public boolean sprawdz() {
+            return pesel!=null&&imie!=null&&nazwisko!=null&&wzrost!=null;
         }
 
         public String getImie() {
@@ -109,30 +116,41 @@ public class Controller {
     }
 
     public static boolean sprawdzPesel(String s) {
-        return s != null && s.matches("([-+]?\\d*\\.?\\d+)")&&s.length()==11;
+        return s != null && s.matches("(\\d*\\.?\\d+)")&&s.length()==11;
     }
 
     public void handleClick(ActionEvent actionEvent) {
         Czlowieczek nowy = new Czlowieczek();
-        if (!imie_txt.getText().equals("")) {
+        if (imie_txt.getText().equals("")) {
+            imie_error.setText("Brak imienia!");
+
+        } else {
+            imie_error.setText("");
             nowy.setImie(imie_txt.getText());
         }
-        if (!nazwisko_txt.getText().equals("")) {
+        if (nazwisko_txt.getText().equals("")) {
+            nazwisko_error.setText("Brak nazwiska!");
+        } else{
+            nazwisko_error.setText("");
             nowy.setNazwisko(nazwisko_txt.getText());
         }
 
-        if (!wzrost_txt.getText().equals("")) {
+        if (wzrost_txt.getText().equals("")) {
+            wzrost_error.setText("Brak wzrostu!");
+        } else {
+            wzrost_error.setText("");
             nowy.setWzrost(Integer.parseInt(wzrost_txt.getText()));
+
         }
-        if (!pesel_txt.getText().equals("")) {
-            if (!sprawdzPesel(pesel_txt.getText())) {
+        if (pesel_txt.getText().equals("")) {
+            pesel_error.setText("Brak peselu!");
+        } else if (!sprawdzPesel(pesel_txt.getText())){
                 pesel_error.setText("Błędny pesel!");
-            } else {
+        } else {
                 pesel_error.setText("");
                 nowy.setPesel(pesel_txt.getText());
             }
-        }
-        table.getItems().add(nowy);
+        if (nowy.sprawdz()) {table.getItems().add(nowy);}
 
     }
 
@@ -151,6 +169,7 @@ public class Controller {
                     }
                 } else if (pesel_txt.getLength() == 11) {
                     pesel_txt.setStyle("-fx-text-fill: green;");
+                    pesel_error.setText("");
                 } else {
                     pesel_txt.setText(newValue.substring(0,11));
                 }
