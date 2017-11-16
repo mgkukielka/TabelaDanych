@@ -16,7 +16,6 @@ public class Controller {
     public TextField imie_txt;
     public TextField nazwisko_txt;
     public TextField wzrost_txt;
-    public TextField wiek_txt;
     public TextField pesel_txt;
     public TableView<Czlowieczek> table;
 
@@ -84,6 +83,7 @@ public class Controller {
 
         public void setPesel(String pesel) {
             this.pesel = pesel;
+
             //"Wyliczanie" płci:
             if (pesel.charAt(9)%2==0) {
                 this.plec="K";
@@ -109,7 +109,7 @@ public class Controller {
     }
 
     public static boolean sprawdzPesel(String s) {
-        return s != null && s.matches("([-+]?\\d*\\.?\\d+){11}");
+        return s != null && s.matches("([-+]?\\d*\\.?\\d+)")&&s.length()==11;
     }
 
     public void handleClick(ActionEvent actionEvent) {
@@ -137,16 +137,26 @@ public class Controller {
     }
 
     public void initialize() {
-        // Wymusza numeryczne wejście
 
+        // Wymusza numeryczne wejście
         pesel_txt.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue,
                                 String newValue) {
-                if (!newValue.matches("\\d*")) {
-                    pesel_txt.setText(newValue.replaceAll("[^\\d]", ""));
+
+                if (pesel_txt.getLength() < 11) {
+                    pesel_txt.setStyle("-fx-text-fill: black;");
+                    if (!newValue.matches("\\d*")) {
+                        pesel_txt.setText(newValue.replaceAll("[^\\d]", ""));
+                    }
+                } else if (pesel_txt.getLength() == 11) {
+                    pesel_txt.setStyle("-fx-text-fill: green;");
+                } else {
+                    pesel_txt.setText(newValue.substring(0,11));
                 }
+
             }
+
         });
 
         wzrost_txt.textProperty().addListener(new ChangeListener<String>() {
@@ -157,6 +167,7 @@ public class Controller {
                     wzrost_txt.setText(newValue.replaceAll("[^\\d]", ""));
                 }
             }
+
         });
 
         for (TableColumn<Czlowieczek, ?> column : table.getColumns()) {
